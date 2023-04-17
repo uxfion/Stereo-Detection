@@ -1,14 +1,19 @@
 import cv2
 import time
+import os
 
 counter = 1
 AUTO = True  # 自动拍照，或手动按s键拍照
 INTERVAL = 2 # 自动拍照间隔
-camera = cv2.VideoCapture(0)#也许你可能要capture两次
+camera = cv2.VideoCapture(1)#也许你可能要capture两次
 camera.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)#设置分辨率
 camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)#
 utc = time.time()
-folder = "D:/DeepLearn/data" # 拍照文件目录
+folder = "./data" # 拍照文件目录
+if not os.path.exists(folder):
+    os.mkdir(folder)
+    os.mkdir(folder + "/left")
+    os.mkdir(folder + "/right")
 
 def shot( frame):
     global counter

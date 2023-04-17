@@ -12,19 +12,19 @@ import math
 #   right_distortion            右相机的畸变系数
 # -------------------------------------------------------------------------------------------------------------
 # 左镜头的内参，如焦距
-left_camera_matrix = np.array([[516.5066236,-1.444673028,320.2950423],[0,516.5816117,270.7881873],[0.,0.,1.]])
-right_camera_matrix = np.array([[511.8428182,1.295112628,317.310253],[0,513.0748795,269.5885026],[0.,0.,1.]])
+left_camera_matrix = np.array([[957.87897256067,0.,0.],[-4.338160552945,963.475117752666,0.],[657.511592562187,458.918822919825,1.]])
+right_camera_matrix = np.array([[957.1966859,0.,0.],[2.14649052356683,961.160771216755,0.],[666.4374271,453.0675781,1.]])
 
 # 畸变系数,K1、K2、K3为径向畸变,P1、P2为切向畸变
-left_distortion = np.array([[-0.046645194,0.077595167, 0.012476819,-0.000711358,0]])
-right_distortion = np.array([[-0.061588946,0.122384376,0.011081232,-0.000750439,0]])
+left_distortion = np.array([[-0.019136979,-0.011447767,-0.000926286,0.000617143,0]])
+right_distortion = np.array([[-0.036612134,0.022738021,-0.002228947,0.008518853,0]])
 
 # 旋转矩阵
-R = np.array([[0.999911333,-0.004351508,0.012585312],
-              [0.004184066,0.999902792,0.013300386],
-              [-0.012641965,-0.013246549,0.999832341]])
+R = np.array([[0.999522105,-0.000194813,-0.030911541],
+              [0.000215788,0.999999749,0.000675215],
+              [0.030911402,-0.000681563,0.999521896]])
 # 平移矩阵
-T = np.array([-120.3559901,-0.188953775,-0.662073075])
+T = np.array([-118.8742475,-0.375077316,-1.436548736])
 
 size = (640, 480)
 
@@ -54,7 +54,10 @@ def onmouse_pick_points(event, x, y, flags, param):
 
 
 # 加载视频文件
-capture = cv2.VideoCapture("./car.avi")
+# capture = cv2.VideoCapture("./car.avi")
+capture = cv2.VideoCapture(1)
+capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 WIN_NAME = 'Deep disp'
 cv2.namedWindow(WIN_NAME, cv2.WINDOW_AUTOSIZE)
 
@@ -121,6 +124,8 @@ while ret:
 
     # 鼠标回调事件
     cv2.setMouseCallback("depth", onmouse_pick_points, threeD)
+    cv2.setMouseCallback("left", onmouse_pick_points, threeD)
+    # cv2.setMouseCallback("right", onmouse_pick_points, threeD)
 
     #完成计时，计算帧率
     fps = (fps + (1. / (time.time() - t1))) / 2
@@ -128,7 +133,7 @@ while ret:
 
     cv2.imshow("depth", dis_color)
     cv2.imshow("left", frame1)
-    cv2.imshow(WIN_NAME, disp)  # 显示深度图的双目画面
+    # cv2.imshow(WIN_NAME, disp)  # 显示深度图的双目画面
     # 若键盘按下q则退出播放
     if cv2.waitKey(1) & 0xff == ord('q'):
         break
