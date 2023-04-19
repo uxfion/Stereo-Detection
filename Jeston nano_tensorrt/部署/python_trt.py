@@ -120,7 +120,9 @@ def resize_image(image, size):
 #------------------------------------------------------------------------------------#
 det = Detector(model_path=b"./yolov5s.engine",dll_path="./libyolov5.so")  # b'' is needed
 # 加载视频文件
-capture = cv2.VideoCapture("car.avi")
+capture = cv2.VideoCapture(0)
+capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 WIN_NAME = 'Deep disp'
 cv2.namedWindow(WIN_NAME, cv2.WINDOW_AUTOSIZE)
 
