@@ -146,7 +146,7 @@ while ret:
     #   mode                        sgbm算法选择模式，以速度由快到慢为：STEREO_SGBM_MODE_SGBM_3WAY、
     #                               STEREO_SGBM_MODE_HH4、STEREO_SGBM_MODE_SGBM、STEREO_SGBM_MODE_HH。精度反之
     # ------------------------------------------------------------------------------------------------------
-    blockSize = 3
+    blockSize = 8
     img_channels = 3
     stereo = cv2.StereoSGBM_create(minDisparity=1,
                                    numDisparities=64,
